@@ -1,15 +1,15 @@
+import { useSection } from '../content/ContentContext.jsx'
+
 export default function Future() {
+  const s = useSection('future')
   return (
     <section className="overflow-hidden bg-signal py-24 text-white sm:py-32" aria-labelledby="future-heading">
       <div className="wrap grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <div>
           <h2 id="future-heading" className="text-5xl font-bold leading-[1.02] sm:text-6xl">
-            The future is built, not predicted.
+            {s.heading}
           </h2>
-          <p className="mt-7 max-w-lg text-lg leading-relaxed text-white/85">
-            Technology continues to reshape how people live, work, communicate, and do business. 4GO Technology LTD is
-            committed to building solutions that participate in that transformation.
-          </p>
+          <p className="mt-7 max-w-lg text-lg leading-relaxed text-white/85">{s.text}</p>
         </div>
 
         <svg viewBox="0 0 520 380" aria-hidden="true" className="h-auto w-full" fill="none" stroke="#fff" strokeWidth="1.5">

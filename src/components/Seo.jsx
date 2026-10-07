@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-const SITE = 'https://4go.tech' // replace with the real domain
+const SITE = 'https://www.4go.com.ng'
 
 function setMeta(attr, key, content) {
   let el = document.head.querySelector(`meta[${attr}="${key}"]`)
@@ -14,7 +14,7 @@ function setMeta(attr, key, content) {
 
 export default function Seo({ title, description, path = '/', noindex = false }) {
   useEffect(() => {
-    const full = path === '/' ? '4GO Technology LTD | Nigerian Technology Company' : `${title} | 4GO Technology LTD`
+    const full = path === '/' ? title : `${title} | 4GO Technology LTD`
     document.title = full
     setMeta('name', 'description', description)
     setMeta('property', 'og:title', full)

@@ -1,21 +1,15 @@
 import { m, useReducedMotion } from 'framer-motion'
-
-const lines = [
-  'It should solve problems.',
-  'It should remove friction.',
-  'It should create opportunities.',
-  'It should connect people.',
-  'It should help businesses grow.',
-  'And it should be built to evolve.',
-]
+import { useItems, useSection } from '../content/ContentContext.jsx'
 
 export default function Philosophy() {
   const reduce = useReducedMotion()
+  const s = useSection('philosophy')
+  const lines = useItems('philosophy_lines')
   return (
     <section className="bg-ink py-24 text-white sm:py-32" aria-labelledby="philosophy-heading">
       <div className="wrap grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
         <h2 id="philosophy-heading" className="text-5xl font-bold leading-[1.02] sm:text-6xl lg:sticky lg:top-28 lg:self-start">
-          Technology should do more than work.
+          {s.heading}
         </h2>
 
         <ul>
@@ -23,7 +17,7 @@ export default function Philosophy() {
             const last = i === lines.length - 1
             return (
               <m.li
-                key={line}
+                key={line.id}
                 initial={reduce ? false : { opacity: 0, x: 24 }}
                 whileInView={reduce ? undefined : { opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
@@ -32,7 +26,7 @@ export default function Philosophy() {
                   last ? 'text-[#8FA6FF]' : 'text-white'
                 }`}
               >
-                {line}
+                {line.text}
               </m.li>
             )
           })}

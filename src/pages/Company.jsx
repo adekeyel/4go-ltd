@@ -5,20 +5,16 @@ import Philosophy from '../components/Philosophy.jsx'
 import WhyUs from '../components/WhyUs.jsx'
 import Portfolio from '../components/Portfolio.jsx'
 import CtaBand from '../components/CtaBand.jsx'
+import { useSection } from '../content/ContentContext.jsx'
 
 export default function Company() {
   const { pathname } = useLocation()
+  const seo = useSection('seo_company')
+  const hero = useSection('company_hero')
   return (
     <>
-      <Seo
-        path={pathname}
-        title="Company"
-        description="How 4GO Technology LTD thinks about technology, why organizations build with us, and the products we have built."
-      />
-      <PageHero
-        title="The company behind the technology."
-        intro="How we think, why people build with us, and the products we have built along the way."
-      />
+      <Seo path={pathname} title={seo.title} description={seo.description} />
+      <PageHero title={hero.title} intro={hero.intro} />
       <Philosophy />
       <WhyUs />
       <Portfolio />

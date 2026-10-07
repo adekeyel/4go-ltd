@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { API } from '../content/ContentContext.jsx'
 
 const topics = [
   'Building a new product',
@@ -71,14 +72,14 @@ export default function ContactForm() {
     }
 
     setStatus('sending')
-    const endpoint = import.meta.env.VITE_CONTACT_ENDPOINT
+    const endpoint = API ? `${API}/site/contact` : ''
     try {
       if (!endpoint) {
         if (import.meta.env.DEV) {
           console.info('Contact form (no endpoint set, simulated):', values)
           await new Promise((r) => setTimeout(r, 600))
         } else {
-          throw new Error('No contact endpoint configured')
+          throw new Error('VITE_API_URL is not set')
         }
       } else {
         const { website, ...payload } = values

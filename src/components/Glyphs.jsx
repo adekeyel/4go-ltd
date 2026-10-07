@@ -55,3 +55,21 @@ export const Consulting = () => (
     <circle cx="26" cy="32" r="3" /><circle cx="56" cy="16" r="2" /><circle cx="56" cy="48" r="2" />
   </svg>
 )
+
+export const Generic = () => (
+  <svg {...base}>
+    <rect x="12" y="12" width="40" height="40" rx="4" />
+    <path d="M22 32h20M32 22v20" />
+  </svg>
+)
+
+export const glyphs = {
+  software: Software,
+  platforms: Platforms,
+  infrastructure: Infrastructure,
+  business: Business,
+  fintech: Fintech,
+  mobile: Mobile,
+  consulting: Consulting,
+}
+export const glyphNames = Object.keys(glyphs)

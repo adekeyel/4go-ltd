@@ -1,16 +1,17 @@
 import { Link } from 'react-router-dom'
 import Logo from './Logo.jsx'
 import { links } from './Navbar.jsx'
+import { useSection } from '../content/ContentContext.jsx'
 
 export default function Footer() {
+  const f = useSection('footer')
+  const c = useSection('contact')
   return (
     <footer className="bg-ink text-white">
       <div className="wrap grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr]">
         <div className="max-w-sm">
           <Logo light />
-          <p className="mt-5 text-sm leading-relaxed text-white/70">
-            4GO Technology LTD is a Nigerian technology company building digital products, software and platforms.
-          </p>
+          <p className="mt-5 text-sm leading-relaxed text-white/70">{f.description}</p>
         </div>
 
         <nav aria-label="Footer">
@@ -25,8 +26,8 @@ export default function Footer() {
         <div>
           <h2 className="font-sans text-sm font-semibold text-white">Contact</h2>
           <ul className="mt-4 space-y-3 text-sm text-white/70">
-            <li>hello@your-domain.com</li>
-            <li>Lagos, Nigeria</li>
+            <li>{c.email}</li>
+            <li>{c.location}</li>
           </ul>
         </div>
       </div>

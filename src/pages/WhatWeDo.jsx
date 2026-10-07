@@ -5,36 +5,27 @@ import WhatWeBuild from '../components/WhatWeBuild.jsx'
 import Approach from '../components/Approach.jsx'
 import Split from '../components/Split.jsx'
 import CtaBand from '../components/CtaBand.jsx'
+import { useItems, useSection } from '../content/ContentContext.jsx'
 
 export default function WhatWeDo() {
   const { pathname } = useLocation()
+  const seo = useSection('seo_whatwedo')
+  const hero = useSection('whatwedo_hero')
+  const work = useSection('whatwedo_work')
+  const ways = useItems('work_ways')
   return (
     <>
-      <Seo
-        path={pathname}
-        title="What We Do"
-        description="Software development, digital platforms, technology infrastructure and business technology solutions from 4GO Technology LTD, a technology company in Nigeria."
-      />
-      <PageHero
-        title="What we do."
-        intro="We design, build, and evolve digital products, software, platforms, and the technology infrastructure behind them."
-      />
+      <Seo path={pathname} title={seo.title} description={seo.description} />
+      <PageHero title={hero.title} intro={hero.intro} />
       <WhatWeBuild />
       <Approach />
-      <Split id="work-heading" title="Working with us" tint>
-        <p>There are three common ways organizations and individuals work with 4GO.</p>
-        <p>
-          <strong className="font-semibold text-ink">Build something new.</strong> Bring an idea and we help turn it
-          into a working digital product.
-        </p>
-        <p>
-          <strong className="font-semibold text-ink">Strengthen what exists.</strong> We extend, modernize, and
-          integrate existing platforms and systems.
-        </p>
-        <p>
-          <strong className="font-semibold text-ink">Get clear direction.</strong> We advise on technology
-          opportunities and help shape the right solution before building begins.
-        </p>
+      <Split id="work-heading" title={work.title} tint>
+        <p>{work.intro}</p>
+        {ways.map((w) => (
+          <p key={w.id}>
+            <strong className="font-semibold text-ink">{w.title}</strong> {w.text}
+          </p>
+        ))}
       </Split>
       <CtaBand />
     </>
