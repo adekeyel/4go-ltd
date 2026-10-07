@@ -44,8 +44,8 @@ const sections = {
   contact: {
     heading: 'Let’s build what comes next.',
     text: 'Have an idea, business challenge, or technology opportunity? We’d like to hear about it.',
-    email: 'hello@your-domain.com',
-    location: 'Lagos, Nigeria',
+    email: '4gotechnologies@gmail.com',
+    location: 'NO 26, Along Sharp Corner Hotel, Igode, Ogun State, Nigeria.',
   },
   footer: {
     description: '4GO Technology LTD is a Nigerian technology company building digital products, software and platforms.',
@@ -159,10 +159,10 @@ const collections = {
     { name: 'Responsibility', text: 'We take security, privacy, trust, and responsible technology seriously.' },
   ]),
   portfolio: withIds([
-    { name: 'OffPay', area: 'Fintech', text: 'Digital payments and wallet technology.', url: '' },
-    { name: '4GO Chatting App', area: 'Communication', text: 'A messaging application for everyday conversation.', url: '' },
-    { name: 'NexusDesk', area: 'Business software', text: 'Helpdesk and customer support technology.', url: '' },
-    { name: 'Leaf', area: 'Digital product', text: 'A product from the 4GO portfolio.', url: '' },
+    { name: 'OffPay', area: 'Fintech', text: 'Digital payments and wallet technology.', url: 'https://offpay.4go.com.ng' },
+    { name: '4GO Chatting App', area: 'Communication', text: 'A messaging application for everyday conversation.', url: 'https://4go.com.ng' },
+    { name: 'NexusDesk', area: 'Business software', text: 'Helpdesk and customer support technology.', url: 'https://nexusdesks.lovable.app' },
+    { name: 'Leaf', area: 'Employment platform', text: 'A platform that connects job seekers with employers.', url: 'https://leafs.lovable.app'},
   ]),
   why_points: withIds([
     { text: 'Technology built for real-world use' },

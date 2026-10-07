@@ -2,8 +2,8 @@
 
 ## Replace placeholders
 - [ ] Email, location, Leaf description: edit in src/content/defaults.js (or the dashboard later)
-- [ ] Domain `https://4go.tech`: search the project for it (index.html, src/components/Seo.jsx, public/robots.txt, public/sitemap.xml)
-- [ ] Email `hello@your-domain.com` (src/components/Footer.jsx, src/pages/Contact.jsx)
+- [ ] Domain `https://www.4go.com.ng`: search the project for it (index.html, src/components/Seo.jsx, public/robots.txt, public/sitemap.xml)
+- [ ] Email `4gotechnologies@gmail.com` (src/components/Footer.jsx, src/pages/Contact.jsx)
 - [ ] Location "Lagos, Nigeria" (same two files)
 - [ ] Leaf description (src/components/Portfolio.jsx)
 - [ ] Logo mark (src/components/Logo.jsx, public/favicon.svg) and public/og-image.png if the brand changes
@@ -22,7 +22,7 @@
 - [ ] Turn on "reduce motion" in your OS and confirm animations stop
 - [ ] Check on a real phone and a wide monitor
 - [ ] Share a page link in WhatsApp/LinkedIn/X to confirm the preview image
-- [ ] Submit https://your-domain/sitemap.xml in Google Search Console
+- [ ] Submit https://www.4go.com.ng/sitemap.xml in Google Search Console
 - [ ] Add official social links to the footer once the accounts exist
 
 ## Admin dashboard
