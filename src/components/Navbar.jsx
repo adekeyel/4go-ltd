@@ -28,41 +28,52 @@ export default function Navbar() {
     document.body.style.overflow = open ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [open])
+  useEffect(() => {
+    if (!open) return undefined
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false) }
+    const mq = window.matchMedia('(min-width: 1024px)')
+    const onChange = (e) => { if (e.matches) setOpen(false) }
+    window.addEventListener('keydown', onKey)
+    mq.addEventListener('change', onChange)
+    return () => { window.removeEventListener('keydown', onKey); mq.removeEventListener('change', onChange) }
+  }, [open])
 
   const linkClass = ({ isActive }) =>
     `text-sm font-medium transition-colors ${isActive ? 'text-signal' : 'text-ink hover:text-signal'}`
 
   return (
-    <header
-      className={`sticky top-0 z-50 bg-paper/95 backdrop-blur transition-shadow ${
-        scrolled ? 'border-b border-line' : 'border-b border-transparent'
-      }`}
-    >
-      <div className="wrap flex h-16 items-center justify-between">
-        <Link to="/" aria-label="4GO Technology LTD home"><Logo /></Link>
-
-        <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
-          {links.map((l) => (
-            <NavLink key={l.to} to={l.to} end={l.to === '/'} className={linkClass}>{l.label}</NavLink>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-3">
-          <Link to="/contact" className="btn-primary hidden sm:inline-flex">Talk to 4GO</Link>
-          <button
-            type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-line lg:hidden"
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            onClick={() => setOpen((v) => !v)}
-          >
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
-              {open ? <path d="M3 3l12 12M15 3L3 15" /> : <path d="M2 5h14M2 13h14" />}
-            </svg>
-          </button>
+    <>
+      <header
+        className={`sticky top-0 z-50 bg-paper/95 backdrop-blur transition-shadow ${
+          scrolled ? 'border-b border-line' : 'border-b border-transparent'
+        }`}
+      >
+        <div className="wrap flex h-16 items-center justify-between">
+          <Link to="/" aria-label="4GO Technology LTD home"><Logo /></Link>
+  
+          <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
+            {links.map((l) => (
+              <NavLink key={l.to} to={l.to} end={l.to === '/'} className={linkClass}>{l.label}</NavLink>
+            ))}
+          </nav>
+  
+          <div className="flex items-center gap-3">
+            <Link to="/contact" className="btn-primary hidden sm:inline-flex">Talk to 4GO</Link>
+            <button
+              type="button"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-line lg:hidden"
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              onClick={() => setOpen((v) => !v)}
+            >
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                {open ? <path d="M3 3l12 12M15 3L3 15" /> : <path d="M2 5h14M2 13h14" />}
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
+      </header>
 
       <AnimatePresence>
         {open && (
@@ -73,7 +84,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18 }}
-            className="fixed inset-x-0 top-16 bottom-0 overflow-y-auto bg-paper lg:hidden"
+            className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto overscroll-contain bg-paper lg:hidden"
           >
             <div className="wrap flex flex-col py-6">
               {links.map((l) => (
@@ -93,6 +104,6 @@ export default function Navbar() {
           </m.nav>
         )}
       </AnimatePresence>
-    </header>
+    </>
   )
 }
