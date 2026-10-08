@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import * as api from './api.js'
 import { useAdmin } from './AdminContext.js'
 
@@ -7,7 +7,7 @@ const when = (iso) => {
 }
 
 export default function Messages() {
-  const { notify, refreshCounts } = useAdmin()
+  const { notify, refreshCounts, counts } = useAdmin()
   const [data, setData] = useState(null)
   const [unreadOnly, setUnreadOnly] = useState(false)
   const [error, setError] = useState('')
@@ -22,6 +22,12 @@ export default function Messages() {
   }, [unreadOnly])
 
   useEffect(() => { load() }, [load])
+
+  // When a new message arrives (the dashboard checks every 30 seconds), refresh this list without a page reload.
+  const seenTotal = useRef(counts.total)
+  useEffect(() => {
+    if (counts.total !== seenTotal.current) { seenTotal.current = counts.total; load() }
+  }, [counts.total, load])
 
   async function toggle(m) {
     try {

@@ -88,6 +88,26 @@ export default function AdminApp() {
     return () => { cancelled = true }
   }, [signedIn, reload, signOut, notify])
 
+  // Watch for new contact-form messages while the dashboard is open: update the unread badge and show a notice.
+  const lastTotal = useRef(null)
+  useEffect(() => {
+    if (!signedIn) return undefined
+    const check = async () => {
+      if (document.hidden) return
+      try {
+        const d = await api.listMessages(false, 1)
+        const total = d.total || 0
+        if (lastTotal.current !== null && total > lastTotal.current) notify('New message received from the contact form.')
+        lastTotal.current = total
+        setCounts({ unread: d.unread || 0, total })
+      } catch { /* counts are cosmetic */ }
+    }
+    check()
+    const t = setInterval(check, 30 * 1000)
+    document.addEventListener('visibilitychange', check)
+    return () => { clearInterval(t); document.removeEventListener('visibilitychange', check); lastTotal.current = null }
+  }, [signedIn, notify])
+
   // Renew the session while the dashboard is open (tokens last 30 minutes).
   useEffect(() => {
     if (!signedIn) return undefined

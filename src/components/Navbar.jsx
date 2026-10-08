@@ -33,7 +33,6 @@ export default function Navbar() {
     `text-sm font-medium transition-colors ${isActive ? 'text-signal' : 'text-ink hover:text-signal'}`
 
   return (
-    <>
     <header
       className={`sticky top-0 z-50 bg-paper/95 backdrop-blur transition-shadow ${
         scrolled ? 'border-b border-line' : 'border-b border-transparent'
@@ -65,8 +64,6 @@ export default function Navbar() {
         </div>
       </div>
 
-    </header>
-
       <AnimatePresence>
         {open && (
           <m.nav
@@ -76,7 +73,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18 }}
-            className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto bg-paper lg:hidden"
+            className="fixed inset-x-0 top-16 bottom-0 overflow-y-auto bg-paper lg:hidden"
           >
             <div className="wrap flex flex-col py-6">
               {links.map((l) => (
@@ -96,6 +93,6 @@ export default function Navbar() {
           </m.nav>
         )}
       </AnimatePresence>
-    </>
+    </header>
   )
 }
