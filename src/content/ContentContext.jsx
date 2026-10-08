@@ -1,7 +1,11 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { defaults } from './defaults.js'
 
-export const API = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
+// The backend serves everything under /api. VITE_API_URL may be given with or without it, so add it when missing.
+export const API = (() => {
+  const u = (import.meta.env.VITE_API_URL || '').trim().replace(/\/+$/, '')
+  return u && !/\/api$/i.test(u) ? u + '/api' : u
+})()
 const CACHE_KEY = '4go.content.v1'
 const empty = { sections: {}, collections: {} }
 const Ctx = createContext(empty)

@@ -49,7 +49,7 @@ export default function HeroVisual() {
       ))}
 
       <rect x="220" y="210" width="120" height="100" rx="4" fill="#0C1220" />
-      <path d="M262 236h14v48h-14zM284 262h14v22h-14z" fill="#1B4DFF" />
+      <image href="/logo-mark-light.png" x="232" y="242.4" width="96" height="35.2" preserveAspectRatio="xMidYMid meet" />
 
       <g className="hero-pulses" fill="#1B4DFF">
         {paths.map((p) => (
