@@ -112,6 +112,15 @@ const sections = {
     title: 'Company',
     description: 'How 4GO Technology LTD thinks about technology, why organizations build with us, and the products we have built.',
   },
+  careers_hero: {
+    title: 'Careers at 4GO.',
+    intro: 'Help us build technology for real-world use. See the roles we are hiring for below.',
+  },
+  careers_empty: { text: 'There are no open positions at the moment. Please check back soon.' },
+  seo_careers: {
+    title: 'Careers',
+    description: 'Join 4GO Technology LTD. See our open positions and apply to build digital products for real-world use.',
+  },
   seo_contact: {
     title: 'Contact',
     description: 'Contact 4GO Technology LTD about a product idea, business challenge or technology opportunity.',
@@ -119,6 +128,8 @@ const sections = {
 }
 
 const collections = {
+  // Job openings are added by an admin (Careers page in the dashboard); there are none built in.
+  positions: [],
   capabilities: withIds([
     { icon: 'software', title: 'Software Development', text: 'Designing and developing modern web, mobile, and enterprise software applications.' },
     { icon: 'platforms', title: 'Digital Platforms', text: 'Building scalable platforms that connect users, businesses, services, and digital experiences.' },

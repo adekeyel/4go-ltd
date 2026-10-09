@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAdmin } from './AdminContext.js'
 
 export default function Overview({ goTo }) {
-  const { counts, sections, items, importDefaults } = useAdmin()
+  const { counts, appCounts, sections, items, importDefaults } = useAdmin()
   const [busy, setBusy] = useState(false)
   const [result, setResult] = useState(null)
 
@@ -25,18 +25,24 @@ export default function Overview({ goTo }) {
         </p>
       </div>
 
-      <dl className="grid gap-px border border-line bg-line sm:grid-cols-3">
+      <dl className="grid gap-px border border-line bg-line sm:grid-cols-2">
         <div className="bg-paper p-5"><dt className="text-sm text-slate">Edited text blocks</dt><dd className="mt-1 text-3xl font-bold font-display">{editedBlocks}</dd></div>
         <div className="bg-paper p-5"><dt className="text-sm text-slate">Customised lists</dt><dd className="mt-1 text-3xl font-bold font-display">{customLists}</dd></div>
         <div className="bg-paper p-5">
           <dt className="text-sm text-slate">Unread messages</dt>
           <dd className="mt-1 text-3xl font-bold font-display">{counts.unread}</dd>
         </div>
+        <div className="bg-paper p-5">
+          <dt className="text-sm text-slate">Unread applications</dt>
+          <dd className="mt-1 text-3xl font-bold font-display">{appCounts.unread}</dd>
+        </div>
       </dl>
 
       <div className="flex flex-wrap gap-3">
         <button type="button" className="btn-primary" onClick={() => goTo('home')}>Edit the home page</button>
         <button type="button" className="btn-quiet" onClick={() => goTo('messages')}>Open messages</button>
+        <button type="button" className="btn-quiet" onClick={() => goTo('applications')}>Open applications</button>
+        <button type="button" className="btn-quiet" onClick={() => goTo('careers')}>Manage positions</button>
         <Link to="/" className="btn-quiet" target="_blank" rel="noopener noreferrer">View the site</Link>
       </div>
 

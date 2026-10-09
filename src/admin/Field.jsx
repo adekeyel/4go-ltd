@@ -15,7 +15,7 @@ export default function Field({ id, field, value, onChange, error }) {
         <textarea rows={field.rows || 4} {...common} />
       ) : field.type === 'select' ? (
         <select {...common}>
-          <option value="">Default icon</option>
+          <option value="">{field.blank ?? 'Default icon'}</option>
           {field.options.map((o) => <option key={o} value={o}>{o}</option>)}
         </select>
       ) : (

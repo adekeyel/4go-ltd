@@ -9,6 +9,7 @@ export const links = [
   { to: '/what-we-do', label: 'What We Do' },
   { to: '/technology', label: 'Technology' },
   { to: '/company', label: 'Company' },
+  { to: '/careers', label: 'Careers' },
   { to: '/contact', label: 'Contact' },
 ]
 
@@ -51,7 +52,7 @@ export default function Navbar() {
         <div className="wrap flex h-16 items-center justify-between">
           <Link to="/" aria-label="4GO Technology LTD home"><Logo /></Link>
   
-          <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
+          <nav aria-label="Primary" className="hidden items-center gap-6 lg:flex xl:gap-8">
             {links.map((l) => (
               <NavLink key={l.to} to={l.to} end={l.to === '/'} className={linkClass}>{l.label}</NavLink>
             ))}

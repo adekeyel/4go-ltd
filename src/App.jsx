@@ -7,6 +7,7 @@ const About = lazy(() => import('./pages/About.jsx'))
 const WhatWeDo = lazy(() => import('./pages/WhatWeDo.jsx'))
 const Technology = lazy(() => import('./pages/Technology.jsx'))
 const Company = lazy(() => import('./pages/Company.jsx'))
+const Careers = lazy(() => import('./pages/Careers.jsx'))
 const Contact = lazy(() => import('./pages/Contact.jsx'))
 const Legal = lazy(() => import('./pages/Legal.jsx'))
 const AdminApp = lazy(() => import('./admin/AdminApp.jsx'))
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/what-we-do" element={<WhatWeDo />} />
         <Route path="/technology" element={<Technology />} />
         <Route path="/company" element={<Company />} />
+        <Route path="/careers" element={<Careers />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy" element={<Legal sectionKey="privacy" />} />
         <Route path="/terms" element={<Legal sectionKey="terms" />} />

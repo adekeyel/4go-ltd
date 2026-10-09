@@ -13,7 +13,7 @@ export default function PageEditor({ page }) {
           const isList = b.type === 'list'
           const label = isList ? collectionsSchema[b.key].label + ' (list)' : sectionsSchema[b.key].label
           return (
-            <details key={b.type + b.key} open={i === 0 || undefined} className="border border-line bg-paper">
+            <details key={b.type + b.key} open={i === (page.defaultOpen ?? 0) || undefined} className="border border-line bg-paper">
               <summary className="cursor-pointer select-none px-5 py-4 font-semibold">{label}</summary>
               <div className="border-t border-line p-5">
                 {isList ? <ListEditor collectionKey={b.key} /> : <SectionEditor sectionKey={b.key} />}

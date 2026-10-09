@@ -31,6 +31,9 @@ export const sectionsSchema = {
 
   company_hero: { label: 'Page header', fields: [f('title', 'Title'), f('intro', 'Introduction', 'textarea')] },
 
+  careers_hero: { label: 'Page header', fields: [f('title', 'Title'), f('intro', 'Introduction', 'textarea')] },
+  careers_empty: { label: 'Message when there are no open positions', fields: [f('text', 'Message', 'textarea', { rows: 3 })] },
+
   contact: { label: 'Contact page and company details', note: 'The email and location also appear in the footer.', fields: [f('heading', 'Page title'), f('text', 'Introduction', 'textarea'), f('email', 'Email address', 'email'), f('location', 'Location')] },
   footer: { label: 'Footer description', fields: [f('description', 'Short company description', 'textarea')] },
 
@@ -45,6 +48,7 @@ Object.assign(sectionsSchema, {
   seo_whatwedo: seo('What We Do'),
   seo_technology: seo('Technology'),
   seo_company: seo('Company'),
+  seo_careers: seo('Careers'),
   seo_contact: seo('Contact'),
 })
 
@@ -64,6 +68,21 @@ export const collectionsSchema = {
     fields: [f('name', 'Name'), f('area', 'Category'), f('text', 'Short description', 'textarea'), f('url', 'Link (optional)', 'url')],
     title: (d) => d.name,
   },
+  positions: {
+    label: 'Open positions', noun: 'position',
+    note: 'Positions shown on the Careers page. Use Hide to close a position without deleting it: it disappears from the site and can no longer be applied for. Applications already received are kept.',
+    fields: [
+      f('title', 'Job title'),
+      f('department', 'Department', 'text', { hint: 'For example: Engineering' }),
+      f('location', 'Location', 'text', { hint: 'For example: Lagos, or Remote' }),
+      f('type', 'Employment type', 'select', { options: ['Full-time', 'Part-time', 'Contract', 'Internship'], blank: 'Not specified' }),
+      f('summary', 'Short description', 'textarea', { rows: 4 }),
+      f('responsibilities', 'What you will do', 'textarea', { rows: 6, hint: 'One point per line.' }),
+      f('requirements', 'What we are looking for', 'textarea', { rows: 6, hint: 'One point per line.' }),
+      f('closes', 'Apply by (optional)', 'text', { hint: 'For example: 30 November 2026' }),
+    ],
+    title: (d) => d.title,
+  },
   why_points: { label: 'Why 4GO points', noun: 'point', note: 'Also shown on the Company page.', fields: [f('text', 'Point')], title: (d) => d.text },
   work_ways: { label: 'Ways to work with us', noun: 'item', fields: [f('title', 'Lead-in (bold)'), f('text', 'Description', 'textarea')], title: (d) => d.title },
 }
@@ -78,7 +97,8 @@ export const pages = [
   { id: 'whatwedo', label: 'What We Do', blocks: [S('whatwedo_hero'), S('whatwedo_work'), L('work_ways')], hint: 'The capabilities and approach on this page are edited under Home page.' },
   { id: 'technology', label: 'Technology', blocks: [S('technology_hero'), S('tech_reliable')], hint: 'The technology areas and future section on this page are edited under Home page.' },
   { id: 'company', label: 'Company', blocks: [S('company_hero')], hint: 'The philosophy, why 4GO, and portfolio on this page are edited under Home page.' },
+  { id: 'careers', label: 'Careers', blocks: [S('careers_hero'), L('positions'), S('careers_empty')], defaultOpen: 1, hint: 'Add and manage open positions here. Applications from visitors arrive under Applications in the menu.' },
   { id: 'contact', label: 'Contact and footer', blocks: [S('contact'), S('footer')] },
   { id: 'legal', label: 'Legal pages', blocks: [S('privacy'), S('terms')] },
-  { id: 'seo', label: 'Search appearance', blocks: [S('seo_home'), S('seo_about'), S('seo_whatwedo'), S('seo_technology'), S('seo_company'), S('seo_contact')], hint: 'How each page looks in browser tabs, Google results and link previews.' },
+  { id: 'seo', label: 'Search appearance', blocks: [S('seo_home'), S('seo_about'), S('seo_whatwedo'), S('seo_technology'), S('seo_company'), S('seo_careers'), S('seo_contact')], hint: 'How each page looks in browser tabs, Google results and link previews.' },
 ]

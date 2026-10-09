@@ -51,8 +51,8 @@ export default function ListEditor({ collectionKey }) {
     try { await fn() } finally { setBusy(false) }
   }
 
-  if (rows.length === 0) {
-    const builtIn = defaults.collections[collectionKey] || []
+  const builtIn = defaults.collections[collectionKey] || []
+  if (rows.length === 0 && builtIn.length > 0) {
     return (
       <div className="space-y-4">
         {schema.note && <p className="text-sm text-slate">{schema.note}</p>}

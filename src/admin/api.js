@@ -75,3 +75,31 @@ export const importContent = (payload) => request(base + "/import", { method: "P
 export const listMessages = (unread = false, limit = 100) => request(base + "/messages?limit=" + limit + (unread ? "&unread=1" : ""))
 export const markMessage = (id, read) => request(base + "/messages/" + id, { method: "PATCH", body: { read } })
 export const deleteMessage = (id) => request(base + "/messages/" + id, { method: "DELETE" })
+export const listApplications = (unread = false, limit = 100) => request(base + "/applications?limit=" + limit + (unread ? "&unread=1" : ""))
+export const markApplication = (id, read) => request(base + "/applications/" + id, { method: "PATCH", body: { read } })
+export const deleteApplication = (id) => request(base + "/applications/" + id, { method: "DELETE" })
+
+// The CV is private, so it is fetched with the admin token and saved from memory (a plain link would not carry the login).
+export async function downloadCv(id, filename) {
+  if (!API) throw new ApiErr(0, "VITE_API_URL is not set, so the dashboard cannot reach the backend.")
+  let res
+  try {
+    res = await fetch(API + base + "/applications/" + id + "/cv", { headers: token ? { Authorization: "Bearer " + token } : {} })
+  } catch {
+    throw new ApiErr(0, "Could not reach the server. Check your connection and try again.")
+  }
+  if (!res.ok) {
+    let json = null
+    try { json = await res.json() } catch { /* no body */ }
+    if (res.status === 401 && onUnauthorized) onUnauthorized()
+    throw new ApiErr(res.status, (json && json.message) || "Download failed (" + res.status + ").")
+  }
+  const url = URL.createObjectURL(await res.blob())
+  const a = document.createElement("a")
+  a.href = url
+  a.download = filename || "cv"
+  document.body.appendChild(a)
+  a.click()
+  a.remove()
+  setTimeout(() => URL.revokeObjectURL(url), 10000)
+}

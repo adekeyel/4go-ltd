@@ -8,6 +8,7 @@ import Login from './Login.jsx'
 import Overview from './Overview.jsx'
 import PageEditor from './PageEditor.jsx'
 import Messages from './Messages.jsx'
+import Applications from './Applications.jsx'
 import Logo from '../components/Logo.jsx'
 
 const stripIds = (list) => list.map(({ id, ...rest }) => rest) // eslint-disable-line no-unused-vars
@@ -20,6 +21,7 @@ export default function AdminApp() {
   const [sections, setSections] = useState({})
   const [items, setItems] = useState({})
   const [counts, setCounts] = useState({ unread: 0, total: 0 })
+  const [appCounts, setAppCounts] = useState({ unread: 0, total: 0 })
   const [loaded, setLoaded] = useState(false)
   const [toast, setToast] = useState(null)
   const toastTimer = useRef(null)
@@ -60,8 +62,16 @@ export default function AdminApp() {
     } catch { /* counts are cosmetic */ }
   }, [])
 
+  const refreshAppCounts = useCallback(async () => {
+    try {
+      const d = await api.listApplications(false, 1)
+      setAppCounts({ unread: d.unread || 0, total: d.total || 0 })
+    } catch { /* counts are cosmetic */ }
+  }, [])
+
   const reload = useCallback(async () => {
-    const [s, i, m] = await Promise.all([api.listSections(), api.listItems(), api.listMessages(false, 1)])
+    // Applications are optional here: if that part of the backend is not deployed yet, the rest of the dashboard still loads.
+    const [s, i, m, ap] = await Promise.all([api.listSections(), api.listItems(), api.listMessages(false, 1), api.listApplications(false, 1).catch(() => null)])
     const secMap = {}
     for (const row of s.sections) secMap[row.key] = row.value
     const byCol = {}
@@ -72,6 +82,7 @@ export default function AdminApp() {
     setSections(secMap)
     setItems(byCol)
     setCounts({ unread: m.unread || 0, total: m.total || 0 })
+    if (ap) setAppCounts({ unread: ap.unread || 0, total: ap.total || 0 })
   }, [])
 
   // Load everything once signed in.
@@ -90,22 +101,29 @@ export default function AdminApp() {
 
   // Watch for new contact-form messages while the dashboard is open: update the unread badge and show a notice.
   const lastTotal = useRef(null)
+  const lastApps = useRef(null)
   useEffect(() => {
     if (!signedIn) return undefined
     const check = async () => {
       if (document.hidden) return
       try {
-        const d = await api.listMessages(false, 1)
+        const [d, a] = await Promise.all([api.listMessages(false, 1), api.listApplications(false, 1).catch(() => null)])
         const total = d.total || 0
         if (lastTotal.current !== null && total > lastTotal.current) notify('New message received from the contact form.')
         lastTotal.current = total
         setCounts({ unread: d.unread || 0, total })
+        if (a) {
+          const apps = a.total || 0
+          if (lastApps.current !== null && apps > lastApps.current) notify('New job application received.')
+          lastApps.current = apps
+          setAppCounts({ unread: a.unread || 0, total: apps })
+        }
       } catch { /* counts are cosmetic */ }
     }
     check()
     const t = setInterval(check, 30 * 1000)
     document.addEventListener('visibilitychange', check)
-    return () => { clearInterval(t); document.removeEventListener('visibilitychange', check); lastTotal.current = null }
+    return () => { clearInterval(t); document.removeEventListener('visibilitychange', check); lastTotal.current = null; lastApps.current = null }
   }, [signedIn, notify])
 
   // Renew the session while the dashboard is open (tokens last 30 minutes).
@@ -165,13 +183,13 @@ export default function AdminApp() {
     },
   }), [attempt, items, reload, notify])
 
-  const ctx = { sections, items, counts, notify, refreshCounts, ...actions }
+  const ctx = { sections, items, counts, appCounts, notify, refreshCounts, refreshAppCounts, ...actions }
 
   if (!signedIn) {
     return <Login notice={notice} onSignedIn={(a) => { setAdmin(a); setNotice(''); setSignedIn(true) }} />
   }
 
-  const nav = [{ id: 'overview', label: 'Overview' }, ...pages, { id: 'messages', label: 'Messages' }]
+  const nav = [{ id: 'overview', label: 'Overview' }, ...pages, { id: 'messages', label: 'Messages' }, { id: 'applications', label: 'Applications' }]
   const page = pages.find((p) => p.id === view)
 
   return (
@@ -206,6 +224,9 @@ export default function AdminApp() {
                 {n.id === 'messages' && counts.unread > 0 && (
                   <span className="ml-2 rounded-full bg-signal px-2 py-0.5 text-xs text-white">{counts.unread}</span>
                 )}
+                {n.id === 'applications' && appCounts.unread > 0 && (
+                  <span className="ml-2 rounded-full bg-signal px-2 py-0.5 text-xs text-white">{appCounts.unread}</span>
+                )}
               </button>
             ))}
           </nav>
@@ -217,6 +238,8 @@ export default function AdminApp() {
               <Overview goTo={setView} />
             ) : view === 'messages' ? (
               <Messages />
+            ) : view === 'applications' ? (
+              <Applications />
             ) : page ? (
               <PageEditor key={page.id} page={page} />
             ) : null}
