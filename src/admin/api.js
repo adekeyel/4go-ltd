@@ -103,3 +103,31 @@ export async function downloadCv(id, filename) {
   a.remove()
   setTimeout(() => URL.revokeObjectURL(url), 10000)
 }
+
+// Image upload for promotions. Sends multipart to POST /site-admin/uploads and expects { data: { url } } back.
+export const IMAGE_MAX_BYTES = 5 * 1024 * 1024
+export const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"]
+
+export async function uploadImage(file) {
+  if (!IMAGE_TYPES.includes(file.type)) throw new ApiErr(0, "Use a JPG, PNG, WebP or GIF image.")
+  if (file.size > IMAGE_MAX_BYTES) throw new ApiErr(0, "That image is over 5 MB. Choose a smaller one.")
+  if (!API) throw new ApiErr(0, "VITE_API_URL is not set, so the dashboard cannot reach the backend.")
+  const body = new FormData()
+  body.append("image", file)
+  let res
+  try {
+    res = await fetch(API + base + "/uploads", { method: "POST", headers: { Accept: "application/json", ...(token ? { Authorization: "Bearer " + token } : {}) }, body })
+  } catch {
+    throw new ApiErr(0, "Could not reach the server. Check your connection and try again.")
+  }
+  if (res.status === 404 || res.status === 405) throw new ApiErr(res.status, "The server does not have the image upload route yet. Deploy the latest backend, then try again.")
+  let json = null
+  try { json = await res.json() } catch { /* no body */ }
+  if (!res.ok) {
+    if (res.status === 401 && onUnauthorized) onUnauthorized()
+    throw new ApiErr(res.status, (json && json.message) || "Upload failed (" + res.status + ").")
+  }
+  const url = json && ((json.data && json.data.url) || json.url)
+  if (!url) throw new ApiErr(res.status, "The server did not return an image address.")
+  return url
+}

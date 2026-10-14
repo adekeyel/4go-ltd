@@ -87,12 +87,31 @@ export const collectionsSchema = {
   work_ways: { label: 'Ways to work with us', noun: 'item', fields: [f('title', 'Lead-in (bold)'), f('text', 'Description', 'textarea')], title: (d) => d.title },
 }
 
+const PROMO_PAGES = ['All pages', 'Home', 'About', 'What We Do', 'Technology', 'Company']
+collectionsSchema.promotions = {
+  label: 'Promotions', noun: 'promotion',
+  note: 'Banners with an image. Use them to tell the company story or to promote products. Hide a promotion to take it off the site without deleting it. Promotions on "All pages" appear on Home, About, What We Do, Technology and Company.',
+  fields: [
+    f('title', 'Headline'),
+    f('type', 'Type', 'select', { options: ['About our company', 'Our product', 'Partner or sponsor'], blank: 'About our company', hint: 'Partner or sponsor banners are labelled "Sponsored" on the site.' }),
+    f('image', 'Image', 'image', { hint: 'JPG, PNG, WebP or GIF, up to 5 MB. A wide image around 1600 x 800 pixels works best.' }),
+    f('alt', 'Image description', 'text', { hint: 'Describe the image for visitors who cannot see it.' }),
+    f('text', 'Short text', 'textarea', { rows: 3 }),
+    f('link', 'Link (optional)', 'url', { hint: 'Must start with https://' }),
+    f('cta', 'Button text (optional)', 'text', { hint: 'For example: Learn more' }),
+    f('page', 'Show on', 'select', { options: PROMO_PAGES, blank: 'All pages' }),
+    f('layout', 'Layout', 'select', { options: ['Wide banner', 'Image left', 'Image right'], blank: 'Wide banner' }),
+  ],
+  title: (d) => d.title,
+}
+
 const S = (key) => ({ type: 'section', key })
 const L = (key) => ({ type: 'list', key })
 
 // Dashboard pages, in the sidebar order. Blocks appear top to bottom as they do on the site.
 export const pages = [
   { id: 'home', label: 'Home page', blocks: [S('hero'), S('intro'), S('build'), L('capabilities'), S('philosophy'), L('philosophy_lines'), S('approach'), L('approach_steps'), S('tech'), L('tech_areas'), S('future'), S('values'), L('values'), S('portfolio'), L('portfolio'), S('why'), L('why_points'), S('cta')] },
+  { id: 'promotions', label: 'Promotions', blocks: [L('promotions')], hint: 'Upload images that tell the company story or promote products. They show on the pages you choose.' },
   { id: 'about', label: 'About', blocks: [S('about_hero'), S('about_what'), S('about_why'), S('about_vision'), S('about_direction')], hint: 'The approach and values on this page are edited under Home page.' },
   { id: 'whatwedo', label: 'What We Do', blocks: [S('whatwedo_hero'), S('whatwedo_work'), L('work_ways')], hint: 'The capabilities and approach on this page are edited under Home page.' },
   { id: 'technology', label: 'Technology', blocks: [S('technology_hero'), S('tech_reliable')], hint: 'The technology areas and future section on this page are edited under Home page.' },

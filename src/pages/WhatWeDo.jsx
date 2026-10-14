@@ -5,6 +5,7 @@ import WhatWeBuild from '../components/WhatWeBuild.jsx'
 import Approach from '../components/Approach.jsx'
 import Split from '../components/Split.jsx'
 import CtaBand from '../components/CtaBand.jsx'
+import AdSlot from '../components/AdSlot.jsx'
 import { useItems, useSection } from '../content/ContentContext.jsx'
 
 export default function WhatWeDo() {
@@ -18,6 +19,7 @@ export default function WhatWeDo() {
       <Seo path={pathname} title={seo.title} description={seo.description} />
       <PageHero title={hero.title} intro={hero.intro} />
       <WhatWeBuild />
+      <AdSlot page="What We Do" />
       <Approach />
       <Split id="work-heading" title={work.title} tint>
         <p>{work.intro}</p>

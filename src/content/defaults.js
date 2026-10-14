@@ -130,6 +130,8 @@ const sections = {
 const collections = {
   // Job openings are added by an admin (Careers page in the dashboard); there are none built in.
   positions: [],
+  // Promotions (image banners) are added by an admin under Promotions in the dashboard; none are built in.
+  promotions: [],
   capabilities: withIds([
     { icon: 'software', title: 'Software Development', text: 'Designing and developing modern web, mobile, and enterprise software applications.' },
     { icon: 'platforms', title: 'Digital Platforms', text: 'Building scalable platforms that connect users, businesses, services, and digital experiences.' },

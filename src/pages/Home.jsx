@@ -12,6 +12,7 @@ import Values from '../components/Values.jsx'
 import Portfolio from '../components/Portfolio.jsx'
 import WhyUs from '../components/WhyUs.jsx'
 import CtaBand from '../components/CtaBand.jsx'
+import AdSlot from '../components/AdSlot.jsx'
 import { useSection } from '../content/ContentContext.jsx'
 
 export default function Home() {
@@ -49,6 +50,7 @@ export default function Home() {
       </section>
 
       <Intro />
+      <AdSlot page="Home" index={0} />
       <WhatWeBuild />
       <Philosophy />
       <Approach />
@@ -57,6 +59,7 @@ export default function Home() {
       <Values />
       <Portfolio />
       <WhyUs />
+      <AdSlot page="Home" index={1} />
       <CtaBand />
     </>
   )

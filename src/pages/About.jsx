@@ -6,6 +6,7 @@ import Paras from '../components/Paras.jsx'
 import Approach from '../components/Approach.jsx'
 import Values from '../components/Values.jsx'
 import CtaBand from '../components/CtaBand.jsx'
+import AdSlot from '../components/AdSlot.jsx'
 import { useSection } from '../content/ContentContext.jsx'
 
 export default function About() {
@@ -22,6 +23,7 @@ export default function About() {
       <PageHero title={hero.title} intro={hero.intro} />
       <Split id="what-heading" title={what.title}><Paras text={what.body} /></Split>
       <Split id="why-heading" title={why.title} tint><Paras text={why.body} /></Split>
+      <AdSlot page="About" />
       <Approach />
       <Split id="vision-heading" title={vision.title} dark><Paras text={vision.body} /></Split>
       <Values />

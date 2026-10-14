@@ -5,6 +5,7 @@ import Philosophy from '../components/Philosophy.jsx'
 import WhyUs from '../components/WhyUs.jsx'
 import Portfolio from '../components/Portfolio.jsx'
 import CtaBand from '../components/CtaBand.jsx'
+import AdSlot from '../components/AdSlot.jsx'
 import { useSection } from '../content/ContentContext.jsx'
 
 export default function Company() {
@@ -16,6 +17,7 @@ export default function Company() {
       <Seo path={pathname} title={seo.title} description={seo.description} />
       <PageHero title={hero.title} intro={hero.intro} />
       <Philosophy />
+      <AdSlot page="Company" />
       <WhyUs />
       <Portfolio />
       <CtaBand />
